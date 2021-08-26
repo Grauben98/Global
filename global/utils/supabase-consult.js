@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { RequireToHome } from '../hook/authUser';
 
 export const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -6,11 +7,11 @@ export const supabase = createClient(
 );
 
 
-export const getEditor = async (key, dataInput) => {
+export const getEditor = async (dataInput) => {
     const { data, error } = await supabase
-    .from('Editors')
+    .from('editors')
     .select('*')
-    .eq(key, dataInput);
+    .eq('id', dataInput);
   
     if (error) {
       console.log(error.message);
@@ -20,30 +21,44 @@ export const getEditor = async (key, dataInput) => {
     return data || [];
 };
 
+export const getArticle = async (dataInput) => {
+    const { data, error } = await supabase
+    .from('articles')
+    .select('*')
+    .eq('id', dataInput);
+  
+    if (error) {
+      console.log(error.message);
+      throw error;
+    }
+  
+    return data || {};
+};
+
 export const getAllArticles = async() => {
     const { data, error } = await supabase
     .from('articles')
     .select('*')
-    .limit(30);
+    .limit(15);
   
     if (error) {
       console.log(error.message);
       throw error;
     }
-  
+
     return data || [];
 }
 
-export const getAllArticlesOfEditor = async(_id) => {
-    const { data, error } = await supabase
+export const setNewArticle =async(newArticle)=>{
+    await supabase
     .from('articles')
-    .select('*')
-    .eq('id_creator',  _id);
-  
-    if (error) {
-      console.log(error.message);
-      throw error;
-    }
-  
-    return data || [];
+    .insert([
+        { 
+            title: newArticle.title, 
+            photo_link: newArticle.link,
+            description: newArticle.description,
+            article: newArticle.article,
+            id_creator:newArticle.user_creator
+        }
+    ])
 }

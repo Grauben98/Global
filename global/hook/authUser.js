@@ -1,10 +1,21 @@
 import { useEffect, useState, createContext, useContext } from 'react'
 import { supabase } from '../utils/initSupabase'
 import { useRouter } from 'next/router'
-import { getEditor } from '../utils/supabase-consult';
 
 export const SignOut = async () => {
   await supabase.auth.signOut();
+}
+
+export const ResetPassword=async(emailUser)=>{
+  await supabase.auth.api.resetPasswordForEmail(emailUser)
+  RequireToHome()
+}
+
+export const RequireToHome = () => {
+  const router = useRouter()
+  useEffect(() => {
+    router.push('/')
+  }, [router])
 }
 
 export const RequireAuth = () => {
