@@ -3,13 +3,15 @@ import { Menu, Transition } from '@headlessui/react'
 import classNames from '../../utils/classsesNames'
 
 import { SignOut } from '../../hook/authUser'
+import { useRouter } from 'next/router'
 
-const MenuLogado = () => (
-  <Menu as="div" className="ml-3 relative">
+const MenuLogado = () => {
+  const router = useRouter();
+  return(
+    <Menu as="div" className="ml-3 relative">
     {({ open }) => (
       <>
         <div>
-          
           <Menu.Button type="button">
           <a class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-500">Mi Cuenta</a>
           </Menu.Button>
@@ -42,7 +44,11 @@ const MenuLogado = () => (
               )}
             </Menu.Item>
             <Menu.Item>
-              <button onClick={() => SignOut()} className="block px-4 py-2 text-sm text-red-700">
+              <button onClick={() =>{ 
+                SignOut()
+                router.push('/')
+              }} 
+                className="block px-4 py-2 text-sm text-red-700">
                 Cerrar Sesión
               </button>
             </Menu.Item>
@@ -51,6 +57,7 @@ const MenuLogado = () => (
       </>
     )}
   </Menu>
-)
+  )
+}
 
 export default MenuLogado

@@ -18,7 +18,7 @@ export default function Article(props) {
                                     <div className='text-gray-600 text-sm font-semibold'>Autor: {props.editor.email}</div>
                                     <div className='flex w-full mt-1'>
                                         <div className='text-gray-400 font-thin text-xs'>
-                                            • {props.article.creation_date}
+                                            UTC {props.article.creation_date}
                                         </div>
                                     </div>
                                 </div>
