@@ -1,15 +1,10 @@
 import { useEffect, useState, createContext, useContext } from 'react'
-import { isEmptyObj } from './userValidations'
 import { supabase } from '../utils/initSupabase'
 import { useRouter } from 'next/router'
+import { getEditor } from '../utils/supabase-consult';
 
 export const SignOut = async () => {
-  await supabase.auth.signOut()
-}
-export const RegisterMeta = async (dataInput) => {
-  await supabase.auth.update({ 
-    data: { stripe: dataInput } 
-  });
+  await supabase.auth.signOut();
 }
 
 export const RequireAuth = () => {
@@ -18,7 +13,7 @@ export const RequireAuth = () => {
 
   useEffect(() => {
     if (!user) {
-      router.push('/iniciar-sesion')
+      router.push('/login')
     }
   }, [user, router])
 }
@@ -29,16 +24,7 @@ export const AuthRedirect = () => {
 
   useEffect(() => {
     if (user) {
-      if(isEmptyObj(user.user_metadata)) {
-        RegisterMeta('none');
-        router.push('/formulario')
-      }else{
-        if(user.user_metadata.stripe=='none'){
-          router.push('/formulario')
-        }else{
-          router.push('/cuenta')
-        }
-      }
+      router.push('/')
     }
   }, [user, router])
 }

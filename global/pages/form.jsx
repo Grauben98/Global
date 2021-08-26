@@ -1,5 +1,8 @@
+
+
+
+
 export default function Form(){
-    
     return (
 <div class="min-h-screen bg-gray-100 p-0 sm:p-12">
   <div class="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl">
